@@ -9,10 +9,11 @@ if(!manager.config){
 }
 manager.initDrag = function(){
    var initObj = (function(){
+      manager.config.dragMoveTimeout = 100;
+
       var isDraggingSlide = false;
       var isDragging = false;
       var windowH = window.innerHeight;
-      manager.config.dragMoveTimeout = 100;
       var dragMoveCount = manager.config.dragMoveTimeout;
       var dragInterval = 500;
       var dragSetTimeout, dragSetInterval;
@@ -135,6 +136,7 @@ manager.initDrag = function(){
       };
 
       var dragStart = function(x, y, o, isExternal){
+         console.print("dragStart", "managerDrag");
          if(o == manager.selectionMask){
             // Drag from inner content
             Android.startDrag();
@@ -221,9 +223,9 @@ manager.initDrag = function(){
       };
       return {
          onLongPressStart: dragStart,
-         onLongPressMove : dragMove,
-         onLongPressEnd  : dragEnd,
-         moveElement     : moveElement
+         onLongPressMove: dragMove,
+         onLongPressEnd: dragEnd,
+         moveElement: moveElement
       };
    })();
 

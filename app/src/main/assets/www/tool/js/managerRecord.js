@@ -15,7 +15,7 @@ manager.initRecord = function(){
       var currentPointer = 0, maxPointer = 0, minPointer = 0;
       var registerAction = function(act){
          if(!act.type || !act.execFunction || !act.undoFunction || !act.redoFunction){
-            console.log("Register action failed.");
+            console.print("Register action failed.","managerRecord");
             return;
          }
          actions.push(act);
@@ -27,7 +27,7 @@ manager.initRecord = function(){
                return;
             }
          }
-         console.log("wrong type");
+         console.print("wrong type");
       };
       var redo = function(act){
          for(var i in actions){
@@ -36,7 +36,7 @@ manager.initRecord = function(){
                return;
             }
          }
-         console.log("wrong type");
+         console.print("wrong type","managerRecord");
       };
       var undo = function(act){
          for(var i in actions){
@@ -45,11 +45,11 @@ manager.initRecord = function(){
                return;
             }
          }
-         console.log("wrong type");
+         console.print("wrong type","managerRecord");
       };
       var undoAction = function(){
          if(currentPointer == minPointer){
-            console.log("Reach undo maximum");
+            console.print("Reach undo maximum","managerRecord");
             return;
          }
          actionStack[currentPointer].undoFunction();
@@ -57,7 +57,7 @@ manager.initRecord = function(){
       };
       var redoAction = function(){
          if(currentPointer == maxPointer){
-            console.log("Reach redo maximum");
+            console.print("Reach redo maximum","managerRecord");
             return;
          }
          currentPointer = (++currentPointer) % maxActionStackLength;
@@ -136,7 +136,7 @@ manager.action.addElement = function(obj, ref){
             myRef = manager.createDummy();
          }
       }else{
-         console.log("addElement: ref has no parentNode");
+         console.print("addElement: ref has no parentNode","managerRecord");
       }
    };
    var redo = function(){
@@ -197,7 +197,7 @@ manager.action.deleteElement = function(obj){
          }
          manager.config.onDoubleTap();
       }else{
-         console.log("moveElement: myObj have no parentNode");
+         console.print("moveElement: myObj have no parentNode","managerRecord");
       }
    };
    var undo = function(){
@@ -257,7 +257,7 @@ manager.action.moveElement = function(obj, ref){
             myObj.parentNode.removeChild(myObj);
          }
       }else{
-         console.log("moveElement: myObj have no parentNode.");
+         console.print("moveElement: myObj have no parentNode.","managerRecord");
          return;
       }
       if(myRef.parentNode){
@@ -273,7 +273,7 @@ manager.action.moveElement = function(obj, ref){
             myRef = manager.createDummy();
          }
       }else{
-         console.log("moveElement: ref has no parentNode");
+         console.print("moveElement: ref has no parentNode","managerRecord");
       }
    };
    var undo = function(){
