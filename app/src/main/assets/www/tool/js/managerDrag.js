@@ -138,7 +138,7 @@ manager.initDrag = function(){
       var dragStart = function(x, y, o, isExternal){
          if(o == manager.selectionMask){
             // Drag from inner content
-         console.print("dragStart", "Android.StartDrag");
+         console.print("Android.startDrag(Internal)","managerDrag");
             Android.startDrag();
             if(x < manager.selectedObjectRect.left ||
                x > manager.selectedObjectRect.left + manager.selectedObjectRect.width ||
@@ -153,7 +153,7 @@ manager.initDrag = function(){
                return;
             }
             dragExternal = isExternal;
-         console.print("dragStart", "Android.StartDrag");
+         console.print("Android.startDrag(Exteral)","managerDrag");
             Android.startDrag();
             // Drag from clipboard or element repo
             manager.config.onDoubleTap();
