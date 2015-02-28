@@ -451,6 +451,11 @@ public class MainActivity extends Activity
         LayoutInflater inflater = getLayoutInflater();
         final View v = inflater.inflate(R.layout.multiline_text_input_dialog, null);
         final EditText input = (EditText) v.findViewById(R.id.inputText);
+        content = content.replace("<br>", "\n");
+        content = content.replace("<br/>", "\n");
+        content = content.replace("&amp;", "&");
+        content = content.replace("&lt;", "<");
+        content = content.replace("&gt;", ">");
         input.setText(content);
         final AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(v)
@@ -479,6 +484,7 @@ public class MainActivity extends Activity
                         inputHTML = inputHTML.replace("&","&amp");
                         inputHTML = inputHTML.replace("<","&lt");
                         inputHTML = inputHTML.replace(">","&gt");
+                        inputHTML = inputHTML.replace("\n","<br>");
                         Log.v("after sanitize", inputHTML);
                         if(inputHTML.isEmpty()){
                             Toast.makeText(MainActivity.this, "Input is empty...", Toast.LENGTH_SHORT).show();
