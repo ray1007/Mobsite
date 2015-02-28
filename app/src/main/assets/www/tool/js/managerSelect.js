@@ -98,7 +98,9 @@ manager.initSelect = function(){
 
       var assignSelection = function(o){
          if(manager.selectedObject){
-            deselect();
+             manager.selectedObject = undefined;
+             selectionMask.style.display = "none";
+             Android.deselect();
          }
          var t = o.getBoundingClientRect();
          manager.selectedObjectRect = t;
@@ -118,15 +120,15 @@ manager.initSelect = function(){
 
       };
       var deselect = function(){
-         editor.propertyPanelHide();
          manager.selectedObject = undefined;
+          editor.propertyPanelHide();
          selectionMask.style.display = "none";
          Android.deselect();
       };
       var select = function(x, y, t){
          if(!t){
             console.warn("Click: can't get object " + x + "," + y);
-            deselect();
+            deselect(false);
             return;
          }
          if(t == selectionMask)return;
@@ -136,7 +138,7 @@ manager.initSelect = function(){
             editor.showProperty(t);
             renderSelectedObject(manager.selectedObject);
          }else{
-            deselect();
+            deselect(false);
          }
       };
       var swipeDown = function(){

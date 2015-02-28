@@ -74,8 +74,8 @@ editor.initProject = function(wid, hei){
          }
       };
       var propertyPanelShow = function(tar){
-         if(!isPropertyShown)
-            return;
+         //if(!isPropertyShown)
+         //   return;
          if(!onanimate){
             properTemp=manager.selectedObject;
             var rect = tar.getBoundingClientRect();
@@ -120,7 +120,7 @@ editor.initProject = function(wid, hei){
          }
       };
       var propertyPanelHide = function(){
-         if(properTemp==manager.selectedObject){
+
              console.log("propertyHide");
              if(!onanimate && properpaneshow){
                  onanimate = true;
@@ -131,7 +131,7 @@ editor.initProject = function(wid, hei){
                 });
             
             }  
-         }
+
       };
       var galleryPanelShow = function(){
          hidePanels(false);
@@ -190,19 +190,28 @@ editor.initProject = function(wid, hei){
          if(!onanimate){
             onanimate = true;
             githubpanelshow = true;
-            ShadowCover();
-            $("#githubPanel").css("opacity", "0");
-            $("#githubPanel").css("left", "15%");
-            setTimeout("$('#githubPanel').transition({opacity: 1 });", 500);
+             $("#shadow").transition({x: scwidth},function(){
+                 $("#githubPanel").css("opacity", "0");
+                 $("#githubPanel").css("left", "15%");
+                 $('#githubPanel').transition({opacity: 1 });
+             });
             onanimate = false;
          }
       };
       var githubPanelHide = function(){
-          console.log("githubhide");
-         $('#githubPanel').transition({opacity: 0});
-         setTimeout("$('#githubPanel').css('left','-1000%');", 500);
-         githubpanelshow = false;
-         ShadowFade();
+         if(!onanimate) {
+             onanimate=true;
+             console.log("githubhide");
+             $('#githubPanel').transition({opacity: 0},function(){
+                 $('#githubPanel').css('left','-1000%');
+                 $('#shadow').transition({ x:0},function(){
+                     onanimate=false;
+                     githubpanelshow = false;
+                 });
+             });
+
+          //   ShadowFade();
+         };
       };
 
       var hidePanels = function(prop){
@@ -351,7 +360,7 @@ editor.initProject = function(wid, hei){
             ShadowCover();
          });
          $("#shadow").on("touchstart ", function(startEvent){
-            ShadowFade();
+            githubPanelHide();
          });
          $("#fullscreen").on("touchstart ", function(startEvent){
             FullScreenPreview();
@@ -472,8 +481,10 @@ editor.initProject = function(wid, hei){
          if(!onanimate){
             onanimate = true;
             $("#previouscolor").css("background-color", col.innerHTML);
-             console.log(propertyPanel);
-            $("#colorPickerPanel").css("left", propertyPanel.style.left);
+             console.log(document.getElementById("colorPickerPanel").style.width);
+             var pro =propertyPanel.getBoundingClientRect();
+             var color=document.getElementById("colorPickerPanel").getBoundingClientRect();
+            $("#colorPickerPanel").css("left", pro.left-color.width);
             $("#colorPickerPanel").css("top", propertyPanel.style.top);
             $("#colorPickerPanel").transition({opacity: 1}, function(){
                onanimate = false;
