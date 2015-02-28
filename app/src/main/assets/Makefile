@@ -1,3 +1,3 @@
 all:
-	cp -a www/tool www/tool.html uiFrame
+	cp -a www/tool www/tool.html uiFrame;
 	
