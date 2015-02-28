@@ -1,0 +1,137 @@
+body {
+}
+
+#innercontent div {
+    border: solid 1px #CCC;
+}
+
+.selectable {
+}
+
+@-webkit-keyframes placeholderAnimation {
+    from {
+        background-color: rgba(35, 82, 124, 0.7);
+    }
+    to {
+        background-color: rgba(35, 82, 124, 0.4);
+    }
+}
+
+@-webkit-keyframes cursorAnimation {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes cursorAnimation {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes cursorAnimation {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes cursorAnimation {
+    from {
+        opacity: 0.1;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.column {
+
+}
+
+.dummy {
+    display: none;
+}
+
+.slide {
+    margin: 10px 0;
+}
+
+.placeholder .cursorStyle {
+    background-color: #23527c;
+    font-size: 100%;
+    width: 100%;
+    margin: 0;
+    min-height: 60px;
+    animation-direction: alternate-reverse;
+    -moz-animation-direction: alternate-reverse;
+    -webkit-animation-direction: alternate-reverse;
+    -o-animation-direction: alternate-reverse;
+    -webkit-animation: placeholderAnimation 1s infinite; /* Safari 4+ */
+    -moz-animation: placeholderAnimation 1s infinite; /* Fx 5+ */
+    -o-animation: placeholderAnimation 1s infinite; /* Opera 12+ */
+    animation: placeholderAnimation 1s infinite; /* IE 10+, Fx 29+ */
+}
+
+.placeholder {
+    padding: 0;
+    min-height: 40px;
+}
+
+.cursorStyle {
+    background-color: #23527c;
+    font-size: 1px;
+    margin: 2px;
+    width: 100%;
+    animation-direction: alternate-reverse;
+    /* Firefox */
+    -moz-animation-direction: alternate-reverse;
+    /* Safari and Chrome */
+    -webkit-animation-direction: alternate-reverse;
+    /* Opera */
+    -o-animation-direction: alternate-reverse;
+    -webkit-animation: cursorAnimation 1s infinite; /* Safari 4+ */
+    -moz-animation: cursorAnimation 1s infinite; /* Fx 5+ */
+    -o-animation: cursorAnimation 1s infinite; /* Opera 12+ */
+    animation: cursorAnimation 1s infinite; /* IE 10+, Fx 29+ */
+}
+
+.selectionMask {
+    background-color: rgba(0, 96, 230, 0.4);
+    border-width: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    display: none;
+    z-index: 20;
+}
+
+.selectionMaskDragging {
+    background-color: rgba(0, 96, 230, 0.2);
+    border-width: 0;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 20;
+}
+
+#myGestureListener {
+    position: fixed;
+    height: 20px;
+    background-color: rgba(101, 171, 176, 50);
+    top: 0;
+    right: 0;
+    z-index: 20;
+}
+
+.cursorEntry {
+    display: none;
+}

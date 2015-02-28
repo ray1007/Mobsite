@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Computer World</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="tool/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="tool/css/typicons.min.css"/>
+    <link rel="stylesheet" type="text/css" href="tool/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="tool/css/github.css"/>
+    <link rel="stylesheet" type="text/css" href="tool/css/farbtastic.css"/>
+    <link rel="stylesheet" type="text/css" href="tool/css/framework.css"/>
+
+        
+</head>
+<body id="test1">
+    
+    <div id="header" >
+        
+        <div id="headericon">
+            <div class="col-sm-3 title">
+                <img id="undoBtn" src="tool/img/icons/undo.png" style="padding-left:5%; height:80%; width:auto;"/>
+                <img id="redoBtn" src="tool/img/icons/redo.png" style="padding-left:5%; height:80%; width:auto;"/>
+            </div>
+            <div class="col-sm-6 title">
+                <h1 id="projecttitle">HelloWorld</h1>
+            </div>
+            <div class="col-sm-3 title">
+                <div class="row title" id="lefticon">
+                    <div class="col-sm-3 title icon"><div id="gallery"></div></div>
+                    <div class="col-sm-3 title icon"><div id="setting"></div></div>
+                    <div class="col-sm-3 title icon"><div id="github"></div></div>
+                    <div class="col-sm-3 title icon"><div id="fullscreen"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="innercontent" >
+    </div>
+    <div id="shadow">
+    </div>
+    <div id="githubPanel" style="position:fixed;height:50%;width:70%; left:-1000%; top:15%; ">
+        <div id="GHDialogLogin" style="position:absolute; width:100%;box-shadow: 0px 1px 7px #000000;border-radius:5px 5px 0 0; height:100%; background-color:white;">
+            <div class="row" style="width:100%;border-radius:5px 5px 0 0;margin-left:0%;margin-bottom:2%;background-color:black;box-shadow: 0px 1px 7px #000000">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                    <h4 class="" style="color:white">Login to GitHub <span class="glyphicon glyphicon-log-in"/></h4>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <div class="onoffswitch" >
+                        <input type="checkbox" name="onoffswitch"
+                               class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <p id="GHMsg" style="margin-left:0%;text-align:right;font-size:50%;font-style:italic;height:50px;margin-bottom:1%;padding-right:5%"></p>
+
+            <div class="row" style="margin-left:0%;margin-bottom:1%;padding-right:5%">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 "><label>Username</label></div>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
+                    <input id="GHUsrIn" type="text" name="usr" class="form-control" placeholder="Username"/>
+                </div>
+            </div>
+            <div class="row" style="margin-left:0%;margin-bottom:1%;padding-right:5%">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 "><label>Password</label></div>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
+                    <input id="GHPasIn" type="password" name="pas" class="form-control" placeholder="Password"/>
+                </div>
+            </div>
+            <br/>
+            <div style="margin-bottom:1%;padding-right:5%;margin-left:0%;">
+                <p id="ErrMsg" style="color:#CC0000;float:left;font-style:italic;margin-left:2%;"></p>
+
+                <input id="GHCancelBtn" type="submit" value="Cancel"
+                       class="btn btn-primary" style="float:right; margin-left:1%;"/>
+                <input id="GHLoginBtn" type="submit" value="Login"
+                       class="btn btn-primary" style="float:right"/>
+                <div id="loadCircle" class="spinner bar" style="visibility:hidden">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="GHSelectDialog" style="position:absolute; width:100%;box-shadow: 0px 1px 7px #000000;border-radius:5px 5px 0 0; height:auto; left:200%;background-color:white;">
+            <div class="row" style="width:100%;border-radius:5px 5px 0 0;margin-left:0%;margin-bottom:2%;background-color:black;box-shadow: 0px 1px 7px #000000">
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                    <h4 class="" style="color:white">Select Your Repository <span class="glyphicon glyphicon glyphicon-list-alt"/></h4>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"></div>
+            </div>
+            <div class="row" style="margin:5% 5% 0% 5%; ">
+                <select id="GHRepoList" name="Morefruit" class="list-group" style="width:100%;border-radius:5px 5px 5px 5px;" size="4" MULTIPLE>
+                </select>
+            </div>
+            <div class="row" style="margin:0% 3% 3% 3%;">
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 "><label>New Repo</label></div>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 ">
+                    <input id="GHNewRepoNameIn" type="text" name="newRepoName" class="form-control" placeholder="Enter new repo name"/>
+                </div>
+            <br/>
+            </div>
+            <div style="margin:0% 5% 0% 5%;">
+                <p id="ErrMsg2" style="color:#CC0000;float:left;font-style:italic;margin-left:0%;"></p>
+                <input id="GHSelectRepoBtn" type="submit" value="Select"
+                       class="btn btn-primary" style="float:right; margin-left:1%;"/>
+                <input id="GHBackBtn" type="submit" value="Back"
+                       class="btn btn-primary" style="float:right"/>
+                <div id="loadCircle2" class="spinner bar" style="visibility:hidden">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        </div>
+    <div id="toolpanel">
+        <div id="toolmark">
+            <img src="tool/img/icons/wrench.png">
+        </div>
+        <a id="addbtn" class="option_container"><img class="displayed" src="tool/img/icons/add.png"/></a>
+        <a class="option_container"><img class="displayed" id="delebtn" src="tool/img/icons/Delete.png"/></a>
+        <a class="option_container"><img class="displayed" id="editbtn" src="tool/img/icons/Edit.png"/></a>
+        <a class="option_container"><img class="displayed" id="dissbtn" src="tool/img/icons/Diselect.png"/></a>
+        <a class="option_container"><img class="displayed" id="copybtn" src="tool/img/icons/copyy.png"/></a>
+        <a class="option_container"><img class="displayed" id="pastbtn" src="tool/img/icons/pastee.png"/></a>
+    </div>
+    <div id="Add-panel" class="bubble_left container">
+        <div class="panelMark"><p>Add New Element</p></div>
+        <div id="Addmenu" class="trapScroll">
+            <div class="elementCat"><p>Text</p></div>
+        <div class="addContainer container">
+            <div class="col-xs-6 element" id="Title"      style="background: url('tool/img/icons/title.png')
+                                                                 no-repeat center center transparent; background-size: 100% auto;">                 
+            </div>
+            <div class="col-xs-6 element" id="Text"       style="background: url('tool/img/icons/text.png')
+                                                                 no-repeat center center transparent; background-size: 100% auto;">                 </div>
+        </div>
+            <div class=" elementCat"><p>Container</p></div>
+        <div class="addContainer container">
+            <div class="col-xs-6 element" id="Container1" style="background: url('tool/img/icons/container1.png')
+                                                                 no-repeat center center transparent; background-size: 100% auto;">
+
+            </div>
+            <div class="col-xs-6 element" id="Container2" style="background: url('tool/img/icons/container2.png')
+                                                                 no-repeat center center transparent; background-size: 100% auto;">
+
+            </div>
+            <div class="col-xs-6 element" id="Container3" style="background: url('tool/img/icons/container3.png')
+                                                                 no-repeat center center transparent; background-size: 100% auto;">
+
+            </div>
+            <div class="col-xs-6 element" id="Container4" style="background: url('tool/img/icons/container4.png')
+                                                                 no-repeat center center transparent; background-size: 100% auto;">
+
+            </div>
+            <div class="col-xs-6 element" id="Container6" style="background: url('tool/img/icons/container6.png')
+                                                                 no-repeat center center transparent; background-size: 100% auto;">
+
+            </div>
+        </div>
+            <div class=" elementCat"><p>Picture</p></div>
+        <div class="addContainer container">
+            <div class="col-xs-6 element" id="Picture" style="background: url('tool/img/icons/picture.png')
+                                                              no-repeat center center transparent; background-size: 100% auto;"></div>
+            <div class="col-xs-6 element" id="Icon" style="background: url('tool/img/icons/icon.png')
+                                                           no-repeat center center transparent; background-size: 100% auto;"></div>
+        </div>
+            <div class=" elementCat"><p>Others</p></div>
+        <div class="addContainer container">
+            <div class="col-xs-6 element" id="HyperLink" style="background: url('tool/img/icons/link.png')
+                                                                no-repeat center center transparent; background-size: 100% auto;"></div>
+            <div class="col-xs-6 element" id="InputBox" style="background: url('tool/img/icons/inputbox.png')
+                                                               no-repeat center center transparent; background-size: 100% auto;"></div>
+        </div>
+
+
+        </div>
+    </div>
+    <div id="galleryPanel">
+        <div class="panelMark"><p>Gallery</p></div>
+        <div class="content">
+        <div id="galleria">
+            <a href="image.jpg">
+                <img 
+                    src="image.jpg"
+                    data-big="image.jpg"
+                    data-title="Biandintz eta zaldiak"
+                    data-description="Horses on Bianditz mountain, in Navarre, Spain."
+                >
+            </a>
+        </div>
+    </div>
+    </div>
+    <div id="colorPickerPanel">
+        <div class="panelMark"><p>Color</p> </div>    
+        <div id="picker">
+            <div class="farbtastic">
+                <div class="wheel"></div>
+                <div class="h-marker marker" style="left: 55px; top: 170px;"></div>
+                <div class="sl-marker marker2" style="left: 91px; top: 73px;"></div>
+            </div>
+        </div>
+        <div type="text" id="color" name="color" value="#123456"></div>
+        <div type="text" id="previouscolor" name="prevcolor" value="#000000"></div>
+        <div id="colorCheck" class="colorBtn col-xs-6" ><p>OK</p></div>
+        <div id="colorCancel" class="colorBtn col-xs-6" ><p>Cancel</p></div>
+    </div>
+    <div id="setting-panel" class="bubble_top">
+    </div>
+    <div id="propertyPanel" class="draggable">
+        
+        <div class="panelMark"><p>Property</p></div>
+        <div class="CSSTableGenerator container" >
+                <table id="properTable" class="trapScroll child">
+                 <tbody id="scroller">
+                    <tr class="pAll" ><td>Category      </td><td id="properCategory"></td></tr>
+                    <tr class="pText"><td>Content       </td><td id="properText"></td></tr>
+                    <tr class="pImg" ><td>Source        </td><td id="properSource"></td></tr>
+                    <tr class="pAll" ><td>Rect - Height </td><td id="properHeight"></td></tr>
+                    <tr class="pAll" ><td>Rect - Width  </td><td id="properWidth"></td></tr>
+                    <tr class="pText"><td>Text - Size   </td><td id="properSize"></td></tr>
+                    <tr class="pText"><td>Text - Font   </td><td id="properFont"></td></tr>
+                    <tr class="pText"><td>Text - Color  </td><td id="properColor"></td></tr>
+                    <tr class="pText"><td>Text - Align  </td><td id="properTextAlign">
+                        <form method="post" action="demoform.asp">
+                            <fieldset class="ui-field-contain">
+                                <label></label>
+                                <select onchange="editor.textAlignChange()" onmousedown="this.value='';"  name="day" id="textAlign">
+                                        <option value="start">Start</option>
+                                        <option value="left">Left</option>
+                                        <option value="center">Center</option>
+                                        <option value="right">Right</option>
+                                        <option value="end">End</option>
+                                </select>
+                            </fieldset>
+                        </form>
+                    </td></tr>
+                    <tr class="pAll" ><td>Bg - Color    </td><td id="properBackgroundColor"></td></tr>
+                    <tr class="pAll" ><td>Bg - Image    </td><td id="properBackgroundImage"></td></tr>
+                    <tr class="pAll" ><td>Opacity       </td><td id="properOpacity"> 
+                        <div class="slider">
+                            <output id="rangevalue">1</output>
+                            <input id="opacitySlider" type = "range" min="0" max="100" />
+                        </div>
+                    </td></tr>
+                    <tr class="pAll" ><td>Margin        </td><td id="properMargin"></td></tr>
+                    <tr class="pAll" ><td>Linking       </td><td id="properLink"></td>
+                  </tbody>
+                </table>
+        </div>      
+    </div>
+    <div id="preview-panel">
+    </div>
+    <div id="preview-control" style="background: url('tool/img/icons/cancel.png')
+                                     no-repeat center center transparent; background-size: 100% auto;">
+    </div>
+    <script src="tool/js/underscore-min.js"></script>
+    <script src="tool/js/jquery-1.11.1.min.js"></script>
+    <script src="tool/gallery/galleria-1.4.2.min.js"></script>
+    <script src="tool/js/farbtastic.js"></script>
+    <script src="tool/js/editor.js"></script>
+    <script src="tool/js/bootstrap.min.js"></script>
+    <script src="tool/js/index.js"></script>
+    <script src="tool/js/jquery.transit.min.js"></script>
+    <script src="tool/js/github.js"></script>
+    <script src="tool/js/main.js"></script>
+    <script src="tool/js/html2canvas.js"></script>
+    
+    <!-- Include gesture -->
+    <script type="text/javascript" src="tool/js/gesture.js"></script>
+    
+    <!-- Include manager and its package-->
+    <script type="text/javascript" src="tool/js/manager.js"></script>
+    <script type="text/javascript" src="tool/js/managerSelect.js"></script>
+    <script type="text/javascript" src="tool/js/managerDrag.js"></script>
+    <script type="text/javascript" src="tool/js/managerProperty.js"></script>
+    <script type="text/javascript" src="tool/js/managerRecord.js"></script>
+
+    <script>
+
+    </script>
+</body>
+</html>
