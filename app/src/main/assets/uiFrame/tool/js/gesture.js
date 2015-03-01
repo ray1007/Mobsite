@@ -30,6 +30,7 @@ function setGestureListener(responses){
    var touch_2FingerMoved = false;
    var touch_quickDown = false;
    var touch_up = false;
+   var touch_longPressChecking = false;
    var touch_x, touch_y, touch_x2, touch_y2;
    var touch_2fingerUpCount = 0,
       touch_2fingerDownCount = 0,
@@ -37,18 +38,23 @@ function setGestureListener(responses){
       touch_2fingerRightCount = 0;
    var touch_pinch = false;
    var touch_pinchCount = 0;
+   var innerProduct = 0;
    var touchTarget;
+
 
    var onTouchStart = function(event){
       if(touch_longPress){
          return;
       }
-      if(event.touches.length > 2)
+      if(event.touches.length > 2){
          return;
+      }
       touchTarget = event.target;
       if(touch_quickDown){
          touch_doubleTap = true;
          responses.onDoubleTap(event.touches.item(0).clientX, event.touches.item(0).clientY, touchTarget);
+         status.innerHTML += "\ndouble tap.";
+
          //myLog("double tap.");
       }else{
          // modify gesture flags.
@@ -64,16 +70,23 @@ function setGestureListener(responses){
          touch_up = false;
          touch_2FingerMoved = false;
 
-         setTimeout(longPressChecker, responses.longPressThreshold);
+         if(!touch_longPressChecking){
+            touch_longPressChecking = true;
+            setTimeout(longPressChecker, responses.longPressThreshold);
+         }
       }
       // update new position.
       touch_x = event.touches.item(0).clientX;
       touch_y = event.touches.item(0).clientY;
+
    };
 
    var onTouchMove = function(event){
-      if(event.touches.length > 2)
+      if(event.touches.length > 2){
+         status.innerHTML += "\ntouch move # > 2.";
          return;
+
+      }
       touchTarget = event.target;
       touch_still = false;
       var touch = event.touches.item(0);
@@ -81,6 +94,7 @@ function setGestureListener(responses){
       if(touch_longPress){
          event.preventDefault();
          responses.onLongPressMove(event.touches.item(0).clientX, event.touches.item(0).clientY, touchTarget);
+         status.innerHTML += "\nLong press move.";
          ////myLog("onLongPressMove")
       }else{
          // handles "2 finger scroll"
@@ -94,7 +108,7 @@ function setGestureListener(responses){
             var delta_y1 = touch.clientY - touch_y;
             var delta_x2 = secondTouch.clientX - touch_x2;
             var delta_y2 = secondTouch.clientY - touch_y2;
-            var innerProduct = delta_x1 * delta_x2 + delta_y1 * delta_y2;
+            innerProduct = delta_x1 * delta_x2 + delta_y1 * delta_y2;
             var distance1 = Math.sqrt(delta_x1 * delta_x1 + delta_y1 * delta_y1);
             var distance2 = Math.sqrt(delta_x2 * delta_x2 + delta_y2 * delta_y2);
 
@@ -103,7 +117,7 @@ function setGestureListener(responses){
 
             //console.log("inner product = "+innerProduct);
 
-            if(innerProduct > 50 && !touch_pinch){ // swipe
+            if(innerProduct > 5 && !touch_pinch){ // swipe
                //console.log("swipe");
                if(Math.abs(delta_x1) > Math.abs(delta_y1)){
                   if((delta_x1) > 0){
@@ -114,6 +128,7 @@ function setGestureListener(responses){
                      if(touch_2fingerRightCount == responses.gestureCountThreshold){
                         myLog("2 finger right");
                         responses.on2FingerMoveRight();
+                        status.innerHTML += "\n2 Finger Move Right.";
                         touch_2FingerMoved = true;
                      }
                   }else{
@@ -124,6 +139,7 @@ function setGestureListener(responses){
                      if(touch_2fingerLeftCount == responses.gestureCountThreshold){
                         myLog("2 finger left");
                         responses.on2FingerMoveLeft();
+                        status.innerHTML += "\n2 Finger Move Left.";
                         touch_2FingerMoved = true;
                      }
                   }
@@ -136,6 +152,7 @@ function setGestureListener(responses){
                      if(touch_2fingerDownCount == responses.gestureCountThreshold){
                         myLog("2 finger down");
                         responses.on2FingerMoveDown();
+                        status.innerHTML += "\n2 Finger Move Down.";
                         touch_2FingerMoved = true;
                      }
                   }else{
@@ -146,31 +163,37 @@ function setGestureListener(responses){
                      if(touch_2fingerUpCount == responses.gestureCountThreshold){
                         myLog("2 finger up");
                         responses.on2FingerMoveUp();
+                        status.innerHTML += "\n2 Finger Move Up.";
                         touch_2FingerMoved = true;
                      }
                   }
                }
-            }else if(innerProduct < -50){ // pinch
+            }else if(innerProduct < -5){ // pinch
                touch_pinch = true;
 
                if(distance1 > distance2){
                   touch_pinchCount++;
                   if(touch_pinchCount == 3){
                      responses.onPinchIn();
+                     status.innerHTML += "\n2 Finger Pinch in.";
                      touch_pinchCount = 0;
                   }
                }else{
                   touch_pinchCount++;
                   if(touch_pinchCount == 3){
                      responses.onPinchOut();
+                     status.innerHTML += "\n2 Finger Pinch Out.";
                      touch_pinchCount = 0;
                   }
                }
             }
+            touch_x2 = secondTouch.clientX;
+            touch_y2 = secondTouch.clientY;
          }
          // update new position.
          touch_x = event.touches.item(0).clientX;
          touch_y = event.touches.item(0).clientY;
+
       }
    };
 
@@ -181,32 +204,44 @@ function setGestureListener(responses){
       if(event.touches.length == 0){
          if(touch_longPress){
             responses.onLongPressEnd();
-            // resetAllVariable();
+            resetAllVariable();
+            status.innerHTML += "\nLong Press End.";
+
             return;
+         }
+         if(touch_2Finger){
+            resetAllVariable();
          }
       }
 
       if(!touch_2Finger && !touch_longPress){
          touch_quickDown = true;
          setTimeout(doubleTapChecker, responses.doubleTapThreshold);
+
       }
+
+      status.innerHTML += "\ntouch up.";
    };
 
    var longPressChecker = function(){
       if(touch_still && !touch_up && !touch_2Finger){
          touch_longPress = true;
          responses.onLongPressStart(touch_x, touch_y, touchTarget);
+         //status.innerHTML += "\nLong Press Start.";
          //myLog("onLongPressStart");
       }
+      touch_longPressChecking = false;
    };
 
    var doubleTapChecker = function(){
       touch_quickDown = false;
       if(!touch_doubleTap && touch_still){
          responses.onSingleTap(touch_x, touch_y, touchTarget);
-         // resetAllVariable();
+         //resetAllVariable();
+         status.innerHTML = "<br>single tap.";
          //myLog("single tap.");
       }
+      resetAllVariable();
    };
 
    var myLog = function(str){
@@ -214,6 +249,8 @@ function setGestureListener(responses){
          console.log(str);
       }
    };
+
+
 
    var resetAllVariable = function(){
       touch_longPress = false;
@@ -223,10 +260,10 @@ function setGestureListener(responses){
       touch_2FingerMoved = false;
       touch_quickDown = false;
       touch_up = false;
-      touch_x = 0;
-      touch_y = 0;
-      touch_x2 = 0;
-      touch_y2 = 0;
+      //touch_x = 0;
+      //touch_y = 0;
+      //touch_x2 = 0;
+      //touch_y2 = 0;
       touch_2fingerUpCount = 0;
       touch_2fingerDownCount = 0;
       touch_2fingerLeftCount = 0;
@@ -239,3 +276,4 @@ function setGestureListener(responses){
    myListener.addEventListener('touchmove', onTouchMove, false);
    myListener.addEventListener('touchend', onTouchEnd, false);
 }
+

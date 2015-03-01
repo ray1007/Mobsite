@@ -87,7 +87,7 @@ editor.initProject = function(wid, hei){
           //  console.log("screen-width" + scwidth);
           //  console.log("screen-height" + scheight);
             onanimate = true;
-             
+
             var wid = $('#propertyPanel').width();
             var hei = $('#propertyPanel').height();
             if(rect.top <= 0.5 * scheight)
@@ -127,10 +127,10 @@ editor.initProject = function(wid, hei){
                  $("#propertyPanel").transition({opacity: 0},function(){
                      onanimate = false;
                      $("#propertyPanel").css("left", "-100%");
-                     properpaneshow = false;    
+                     properpaneshow = false;
                 });
-            
-            }  
+
+            }
 
       };
       var galleryPanelShow = function(){
@@ -702,4 +702,4 @@ editor.initProject = function(wid, hei){
    editor.showProperty = initObj.showProperty;
    editor.shadowFade = initObj.shadowFade;
    editor.setAddPanelDragListner = initObj.setAddPanelDragListner;
-}
+};

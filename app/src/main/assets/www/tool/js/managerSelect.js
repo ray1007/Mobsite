@@ -100,7 +100,7 @@ manager.initSelect = function(){
          if(manager.selectedObject){
              manager.selectedObject = undefined;
              selectionMask.style.display = "none";
-             Android.deselect();
+             //Android.deselect();
          }
          var t = o.getBoundingClientRect();
          manager.selectedObjectRect = t;

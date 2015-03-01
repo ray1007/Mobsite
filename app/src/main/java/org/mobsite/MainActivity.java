@@ -91,6 +91,7 @@ public class MainActivity extends Activity
     private static final int REQUEST_CAMERA = 13;
     private Uri newPhoto;
     private int imgCount = 1;
+    private boolean useingCam = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,7 +128,17 @@ public class MainActivity extends Activity
     protected void onStop() {
         super.onStop();
         Log.v(_logTag, "onStop & saveProject()");
-        //saveProject();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String js = "javascript:";
+                if(!useingCam)
+                    js += "manager.config.onDoubleTap();";
+                js += "console.log(\"call from Android to save index.html.\");";
+                js += "Android.saveProject(saveHTML());";
+                cwv.loadUrl(js);
+            }
+        });
     }
 
 
@@ -229,6 +240,7 @@ public class MainActivity extends Activity
                     break;
                 case REQUEST_CAMERA:
                     Log.v("import photo", "camera");
+                    useingCam = false;
                     break;
             }
 
@@ -266,7 +278,7 @@ public class MainActivity extends Activity
                         js += "manager.action.setProperty(manager.selectedObject, \"src\", manager.selectedObject.src, \""+url+"\");";
                         setWebViewURL(js);
                     }
-                }, 3000);
+                }, 0);
 
             } catch (IOException e){ e.printStackTrace(); }
         }// end
@@ -425,7 +437,7 @@ public class MainActivity extends Activity
     }
 
     @JavascriptInterface
-    public void deselect() { selectedShadow = false; }
+    public void deselect() { selectedShadow = false;}
 
     @JavascriptInterface
     public void startDrag() {
@@ -441,6 +453,7 @@ public class MainActivity extends Activity
                 //shadow.setVisibility(View.VISIBLE);
                 // Drag starts.
                 vibrator.vibrate(100);
+                Log.v("selectedShadow", ""+selectedShadow);
                 enableShadow = (selectedShadow)?true:false;
             }
         });
@@ -549,6 +562,7 @@ public class MainActivity extends Activity
                         Log.v("URI", newPhoto.toString());
                         getCamera.putExtra(MediaStore.EXTRA_OUTPUT, newPhoto);
                         startActivityForResult(getCamera, REQUEST_CAMERA);
+                        useingCam = true;
                         break;
                 }
             }
@@ -724,14 +738,19 @@ public class MainActivity extends Activity
     }
 
     @JavascriptInterface
-    public void saveProject() {
-        File root = new File(projectPath);
-        Log.v("peek","what's inside : ");
-        for (String s : root.list()){
-            Log.v("",s);
-        }
+    public void saveProject(String innercontentHTML) {
+        File file = new File(projectPath+"/index.html");
+        Log.v("save", file.getPath());
+        Log.v("save", innercontentHTML);
+        try{
+            OutputStream fout = new BufferedOutputStream(new FileOutputStream(file));
+            fout.write(innercontentHTML.getBytes("UTF-8"));
+            fout.flush();
+            fout.close();
 
+        }catch (IOException ex){ ex.printStackTrace(); }
 
+        Log.v("save", "index.html is this big : " + file.length());
     }
 
 

@@ -335,7 +335,45 @@ function openDeployDialog(){
         head.appendChild(elem);
             
         var inner  = document.getElementById("innercontent");
-        inner.removeChild(inner.lastElementChild);
+        //inner.removeChild(inner.lastElementChild);
+        manager.selectionMask.parentNode.removeChild(manager.selectionMask);
+
+        var code = "<!DOCTYPE html>\n"+
+                   "<html>\n"+
+                   "<head>\n"+
+                   "    "+head.innerHTML+
+                   "\n</head>\n"+
+                   "<body>\n"+
+                   inner.innerHTML+
+                   "<script src=\"js/jquery.min.js\">"+
+                   "<script src=\"js/bootstrap.min.js\">"+
+                   "\n</body>\n"+
+                   "</html>"
+        ;
+        //console.log(code);
+        return code;
+    }
+}
+var saveHTML = function(){
+        //console.log("saveHTML\n");
+        var head = document.createElement('head');
+        var elem;
+        elem = document.createElement('meta');
+        elem.setAttribute('charset', 'utf-8');
+        head.appendChild(elem);
+        elem = document.createElement('meta');
+        elem.setAttribute('name', 'viewport');
+        elem.setAttribute('content', 'width=device-width, initial-scale=1');
+        head.appendChild(elem);
+        elem = document.createElement('title');
+        elem.innerHTML = Android.getProjectName();
+        head.appendChild(elem);
+        elem = document.createElement('link');
+        elem.setAttribute("href", "css/bootstrap.min.css");
+        head.appendChild(elem);
+
+        var inner  = document.getElementById("innercontent");
+        //inner.removeChild(inner.lastElementChild);
 
         var code = "<!DOCTYPE html>\n"+
                    "<html>\n"+
@@ -347,7 +385,6 @@ function openDeployDialog(){
                    "\n</body>\n"+
                    "</html>"
         ;
-        //console.log(code);
+        console.log(code);
         return code;
-    }
 }

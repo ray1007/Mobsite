@@ -78,14 +78,14 @@ public class StartActivity extends Activity {
     private VideoView splashVid;
     private RelativeLayout splashView;
     private boolean splash = true;
-    private int newListIndex, openListIndex;
+    private int newListIndex=0, openListIndex=0;
     private Button newListBtn, openListOpenBtn, openListDeleteBtn;
     private ProgressDialog pDialog;
 
-    public static boolean debugMode = true;
-    private static final String _templateFolderPath = "template";
-    //private static final String _toolFolderPath = "uiFrame";
-    private static final String _toolFolderPath = "tool";
+    public static boolean debugMode = false;
+    private static final String _templateFolderPath = "templates";
+    private static final String _toolFolderPath = "uiFrame";
+    //private static final String _toolFolderPath = "tool";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -278,7 +278,11 @@ public class StartActivity extends Activity {
     class Choose_Listener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            openListIndex = newListIndex = i;
+
+            if(adapterView.equals(openmenu))
+                openListIndex = i;
+            else
+                newListIndex = i;
 
             for (int j = 0; j < adapterView.getChildCount(); j++) {
                 adapterView.getChildAt(j).setBackgroundColor(Color.TRANSPARENT);
@@ -681,6 +685,7 @@ public class StartActivity extends Activity {
         protected void onPostExecute(Void result) {
             pDialog.dismiss();
             oldProjectsList.add(addProjectName("Open", newName));
+            OpenAdapter.notifyDataSetChanged();
             Intent edit = new Intent();
             edit.setClass(StartActivity.this, MainActivity.class);
             Bundle bundle = new Bundle();
