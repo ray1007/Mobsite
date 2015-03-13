@@ -370,10 +370,10 @@ var saveHTML = function(){
         elem = document.createElement('title');
         elem.innerHTML = Android.getProjectName();
         head.appendChild(elem);
-        elem = document.createElement('link');
+        /*elem = document.createElement('link');
         elem.setAttribute("rel", "stylesheet");
         elem.setAttribute("type", "text/css");
-        elem.setAttribute("href", "css/bootstrap.min.css");
+        elem.setAttribute("href", "css/bootstrap.min.css");*/
         head.appendChild(elem);
 
         var inner  = document.getElementById("innercontent");
