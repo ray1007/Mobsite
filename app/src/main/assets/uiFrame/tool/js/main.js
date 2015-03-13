@@ -382,6 +382,8 @@ var saveHTML = function(){
                    "\n</head>\n"+
                    "<body>\n"+
                    inner.innerHTML+
+                   "<script src=\"js/jquery.min.js\"></script>\n"+
+                   "<script src=\"js/bootstrap.min.js\"></script>"+
                    "\n</body>\n"+
                    "</html>"
         ;
