@@ -331,6 +331,8 @@ function openDeployDialog(){
         elem.innerHTML = Android.getProjectName();
         head.appendChild(elem);
         elem = document.createElement('link');
+        elem.setAttribute("rel", "stylesheet");
+        elem.setAttribute("type", "text/css");
         elem.setAttribute("href", "css/bootstrap.min.css");
         head.appendChild(elem);
             
@@ -369,6 +371,8 @@ var saveHTML = function(){
         elem.innerHTML = Android.getProjectName();
         head.appendChild(elem);
         elem = document.createElement('link');
+        elem.setAttribute("rel", "stylesheet");
+        elem.setAttribute("type", "text/css");
         elem.setAttribute("href", "css/bootstrap.min.css");
         head.appendChild(elem);
 
